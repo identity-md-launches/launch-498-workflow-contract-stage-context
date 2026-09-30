@@ -1,0 +1,26 @@
+{
+  "kind": "evm_project",
+  "token": {
+    "contract": "LaunchToken",
+    "name": "Swarm Cities",
+    "symbol": "GRID",
+    "decimals": 18
+  },
+  "contracts": [
+    {
+      "contract": "GrantExecutor",
+      "constructorArgs": ["$owner"]
+    },
+    {
+      "contract": "CityRegistry",
+      "constructorArgs": ["$token", "$contract:GrantExecutor", "$owner"]
+    }
+  ],
+  "pool": {
+    "pairedCurrency": "0x0000000000000000000000000000000000000000",
+    "fee": 3000,
+    "tickSpacing": 60,
+    "initialPrice": "79228162514264337593543950336"
+  },
+  "notes": "LaunchToken has no constructor arguments. GrantExecutor is deployed before CityRegistry; no initialization calls are needed. GrantExecutor.operator and CityRegistry.treasury both resolve to the policy $owner. The approved workflow requires both roles to use its specified wallet. The policy owner was not supplied here, so that identity match remains unverified; a mismatch is an authorization conflict for independent review, not permission to substitute a different wallet. The pool pairs with native ETH and has no hook; initialPrice is decimal sqrtPriceX96, used by legacy policies when no policy opening price applies. The workflow targets Sepolia. Chain selection, policy, source publication, signed artifact linkage, admission and deployment belong to services."
+}
